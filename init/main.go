@@ -1,21 +1,21 @@
 package main
 
 import (
-  "fmt"
+	"fmt"
+	"net/http"
 )
 
-//TIP <p>To run your code, right-click the code and select <b>Run</b>.</p> <p>Alternatively, click
-// the <icon src="AllIcons.Actions.Execute"/> icon in the gutter and select the <b>Run</b> menu item from here.</p>
-
 func main() {
-  //TIP <p>Press <shortcut actionId="ShowIntentionActions"/> when your caret is at the underlined text
-  // to see how GoLand suggests fixing the warning.</p><p>Alternatively, if available, click the lightbulb to view possible fixes.</p>
-  s := "gopher"
-  fmt.Println("Hello and welcome, %s!", s)
+	// root("/")에 대한 handler function을 등록해준다.
+	http.HandleFunc("/", helloWorld)
 
-  for i := 1; i <= 5; i++ {
-	//TIP <p>To start your debugging session, right-click your code in the editor and select the Debug option.</p> <p>We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-	// for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.</p>
-	fmt.Println("i =", 100/i)
-  }
+	// go의 http 서버에 대해 8080 port로 listener 를 등록해준다.
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		fmt.Println("에러가 발생했습니다.")
+		panic(err)
+	}
+}
+
+func helloWorld(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Hello World")
 }

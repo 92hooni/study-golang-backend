@@ -19,23 +19,3 @@ func NewNetwork() *Network {
 
 	return r
 }
-
-func (r *Network) ServerStart(port string) error {
-	return r.engin.Run(port)
-}
-
-func (n *Network) requestGET(path string, handler ...gin.HandlerFunc) gin.IRoutes {
-	return n.engin.GET(path, handler...)
-}
-
-func (n *Network) requestPOST(path string, handler ...gin.HandlerFunc) gin.IRoutes {
-	return n.engin.POST(path, handler...)
-}
-
-func (n *Network) requestPUT(path string, handler ...gin.HandlerFunc) gin.IRoutes {
-	return n.engin.PUT(path, handler...)
-}
-
-func (n *Network) requestDELETE(path string, handler ...gin.HandlerFunc) gin.IRoutes {
-	return n.engin.DELETE(path, handler...)
-}

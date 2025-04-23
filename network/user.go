@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"sync"
+	"web-study/types"
 )
 
 var (
@@ -51,7 +52,13 @@ func (u *userRouter) create(c *gin.Context) {
 func (u *userRouter) get(c *gin.Context) {
 	fmt.Println("get requested !")
 
-	u.router.okResponse(c, "테스트 입니다.")
+	u.router.okResponse(c, &types.UserResponse{
+		ApiResponse: &types.ApiResponse{
+			Result:      1,
+			Description: "성공입니다.",
+		},
+		User: nil,
+	})
 }
 
 func (u *userRouter) update(c *gin.Context) {

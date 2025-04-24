@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"sync"
+	"web-study/service"
 	"web-study/types"
 )
 
@@ -17,12 +18,15 @@ var (
 type userRouter struct {
 	router *Network
 	// service
+
+	userService *service.User
 }
 
-func newUserRouter(router *Network) *userRouter {
+func newUserRouter(router *Network, userService *service.User) *userRouter {
 	userRouterInit.Do(func() {
 		userRouterInstance = &userRouter{
-			router: router,
+			router:      router,
+			userService: userService,
 		}
 
 		// Go 기본 모듈의 http.handleFunc("/", ) 과 동일한 액션
@@ -53,11 +57,8 @@ func (u *userRouter) get(c *gin.Context) {
 	fmt.Println("get requested !")
 
 	u.router.okResponse(c, &types.UserResponse{
-		ApiResponse: &types.ApiResponse{
-			Result:      1,
-			Description: "성공입니다.",
-		},
-		User: nil,
+		ApiResponse: types.NewApiResponse(1, "성공입니다."),
+		User:        nil,
 	})
 }
 

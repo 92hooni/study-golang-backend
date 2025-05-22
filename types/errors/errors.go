@@ -1,3 +1,19 @@
 package errors
 
-// 서버에서 요청 했을때, 발생한 에러에 대해 접근제어자를 통해 구현한다.
+import "fmt"
+
+const (
+	NotFoundUser = iota
+)
+
+var errMessage = map[int64]string{
+	NotFoundUser: "user not found",
+}
+
+func Errorf(code int64, args ...interface{}) error {
+	if message, ok := errMessage[code]; ok {
+		return fmt.Errorf("%s : %v", message, args)
+	} else {
+		return fmt.Errorf("not found error code: %d", code)
+	}
+}

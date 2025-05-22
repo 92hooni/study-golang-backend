@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"errors"
 	"web-study/types"
+	"web-study/types/errors"
 )
 
 type UserRepository struct {
@@ -36,7 +36,7 @@ func (u *UserRepository) Delete(userName string) error {
 	}
 
 	if !isExisted {
-		return errors.New("user not found")
+		return errors.Errorf(errors.NotFoundUser, nil)
 	} else {
 		return nil
 	}

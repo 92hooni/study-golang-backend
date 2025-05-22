@@ -55,15 +55,15 @@ func (u *userRouter) create(c *gin.Context) {
 	// body 값에 대한 바인딩 체크
 	if err := c.ShouldBindJSON(&req); err != nil {
 		u.router.failedResponse(c, &types.CommonResponse{
-			ApiResponse: types.NewApiResponse(-1, "바인딩 오류입니다."),
+			ApiResponse: types.NewApiResponse(-1, "바인딩 오류입니다.", err.Error()),
 		})
 	} else if err = u.userService.Create(req.ToUser()); err != nil {
 		u.router.failedResponse(c, &types.CommonResponse{
-			ApiResponse: types.NewApiResponse(-1, "서비스 오류입니다."),
+			ApiResponse: types.NewApiResponse(-1, "서비스 오류입니다.", err.Error()),
 		})
 	} else {
 		u.router.okResponse(c, &types.CommonResponse{
-			ApiResponse: types.NewApiResponse(1, "생성 성공!"),
+			ApiResponse: types.NewApiResponse(1, "생성 성공!", nil),
 		})
 	}
 }
@@ -72,7 +72,7 @@ func (u *userRouter) get(c *gin.Context) {
 	fmt.Println("get requested !")
 
 	u.router.okResponse(c, &types.GetUserResponse{
-		ApiResponse: types.NewApiResponse(1, "성공입니다."),
+		ApiResponse: types.NewApiResponse(1, "성공입니다.", nil),
 		Users:       u.userService.Get(),
 	})
 }
@@ -92,7 +92,7 @@ func (u *userRouter) update(c *gin.Context) {
 	u.userService.Update(nil, nil)
 
 	u.router.okResponse(c, &types.CommonResponse{
-		ApiResponse: types.NewApiResponse(1, "업데이트 성공!"),
+		ApiResponse: types.NewApiResponse(1, "업데이트 성공!", nil),
 	})
 }
 
@@ -102,15 +102,15 @@ func (u *userRouter) delete(c *gin.Context) {
 	// body 값에 대한 바인딩 체크
 	if err := c.ShouldBindJSON(&req); err != nil {
 		u.router.failedResponse(c, &types.CommonResponse{
-			ApiResponse: types.NewApiResponse(-1, "바인딩 오류입니다."),
+			ApiResponse: types.NewApiResponse(-1, "바인딩 오류입니다.", err.Error()),
 		})
 	} else if err = u.userService.Delete(req.Name); err != nil {
 		u.router.failedResponse(c, &types.CommonResponse{
-			ApiResponse: types.NewApiResponse(-1, "서비스 오류입니다."),
+			ApiResponse: types.NewApiResponse(-1, "서비스 오류입니다.", err.Error()),
 		})
 	} else {
 		u.router.okResponse(c, &types.CommonResponse{
-			ApiResponse: types.NewApiResponse(1, "삭제 성공!"),
+			ApiResponse: types.NewApiResponse(1, "삭제 성공!", nil),
 		})
 	}
 }

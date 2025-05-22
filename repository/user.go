@@ -20,8 +20,22 @@ func (u *UserRepository) Create(newUser *types.User) error {
 	return nil
 }
 
-func (u *UserRepository) Update(beforeUser *types.User, afterUser *types.User) error {
-	return nil
+func (u *UserRepository) Update(name string, newAge int64) error {
+	isExisted := false
+
+	for _, user := range u.userMap {
+		if user.Name == name {
+			user.Age = newAge
+			isExisted = true
+			break
+		}
+	}
+
+	if !isExisted {
+		return errors.Errorf(errors.NotFoundUser, nil)
+	} else {
+		return nil
+	}
 }
 
 func (u *UserRepository) Delete(userName string) error {
